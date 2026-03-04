@@ -191,7 +191,19 @@ function UploadScreen({ onLoad }) {
         </div>
       )}
 
-      <input ref={inputRef} type="file" accept=".csv,text/csv,text/plain,text/comma-separated-values,application/csv,application/excel,application/vnd.ms-excel" capture={false} style={{display:"none"}} onChange={e=>handleFile(e.target.files[0])}/>
+      {/* <input ref={inputRef} 
+      type="file" 
+      accept=".csv,text/csv,text/plain,text/comma-separated-values,application/csv,application/excel,application/vnd.ms-excel" 
+      capture={false} 
+      style={{display:"none"}} 
+      onChange={e=>handleFile(e.target.files[0])}/> */}
+      <input 
+        ref={inputRef} 
+        type="file" 
+        accept="*/*"
+        style={{display:"none"}} 
+        onChange={e=>handleFile(e.target.files[0])}
+      />
     </div>
   );
 }
