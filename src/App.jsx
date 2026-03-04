@@ -270,9 +270,11 @@ function FlightDetail({ flight, onClose }) {
       const comentarios=flight.comments.filter(c=>c.Comentario_Durante_el_vuelo)
         .map((c,i)=>`[${i+1}] (${c.Tipo_pax||'S/D'}, Nota ${c.Durante_el_vuelo??'N/A'}, ${c.Cabina}) "${c.Comentario_Durante_el_vuelo}"`).join("\n");
       const prompt=`Eres analista de experiencia de pasajeros LATAM Airlines. Analiza los comentarios del vuelo LA${flight.vuelo} (${flight.ruta}, ${flight.std}) y proporciona:\n1. Resumen ejecutivo (máx 3 oraciones)\n2. Los 2 principales problemas\n3. Los 2 principales aspectos positivos (si los hay)\n4. Una recomendación accionable\n\nComentarios:\n${comentarios}\n\nResponde en español, conciso y directo.`;
-      const apiKey=import.meta.env.VITE_GEMINI_KEY;
-      const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${apiKey}`,
-        {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{maxOutputTokens:600,temperature:0.4}})});
+      const res=await fetch("/api/gemini", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ prompt })
+            });
       const data=await res.json();
       setSummary(data?.candidates?.[0]?.content?.parts?.[0]?.text||"Sin respuesta de Gemini.");
     } catch(e){setSummary("Error de conexión.");}
