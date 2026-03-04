@@ -130,7 +130,9 @@ function UploadScreen({ onLoad }) {
   }, [onLoad]);
 
   return (
-    <div style={{minHeight:"100vh",background:"#060d1a",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",fontFamily:"'Courier New',Courier,monospace",padding:24}}>
+    <div style={{minHeight:"100vh",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",fontFamily:"'Courier New',Courier,monospace",padding:24,position:"relative"}}>
+      <div style={{position:"fixed",inset:0,zIndex:0,backgroundImage:"url('https://imagenes.portafolio.co/files/og_thumbnail/uploads/2026/02/23/699cd89c18c54.jpeg')",backgroundSize:"cover",backgroundPosition:"center center",filter:"blur(3px) brightness(0.8)",transform:"scale(1.05)"}}/>
+      <div style={{position:"relative",zIndex:1,display:"flex",flexDirection:"column",alignItems:"center",width:"100%"}}>
       <style>{`@keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(200%)}}`}</style>
 
       <div style={{textAlign:"center",marginBottom:44}}>
@@ -204,6 +206,7 @@ function UploadScreen({ onLoad }) {
         style={{display:"none"}} 
         onChange={e=>handleFile(e.target.files[0])}
       />
+      </div> 
     </div>
   );
 }
@@ -454,8 +457,14 @@ export default function App() {
   });
 
   return (
-    <div style={{minHeight:"100vh",background:"#060d1a",fontFamily:"'Courier New',Courier,monospace",color:"#c0cce0",padding:"0 0 60px"}}>
-      <div style={{background:"linear-gradient(180deg,#0a1220 0%,#060d1a 100%)",borderBottom:"1px solid #0e1a2e",padding:"22px 28px 18px"}}>
+  <div style={{minHeight:"100vh",fontFamily:"'Courier New',Courier,monospace",color:"#c0cce0",padding:"0 0 60px",position:"relative"}}>
+    
+    {/* FONDO */}
+    <div style={{position:"fixed",inset:0,zIndex:0,backgroundImage:"url('https://imagenes.portafolio.co/files/og_thumbnail/uploads/2026/02/23/699cd89c18c54.jpeg')",backgroundSize:"cover",backgroundPosition:"center center",backgroundRepeat:"no-repeat",filter:"blur(3px) brightness(0.80)",transform:"scale(1.05)"}}/>
+    
+    {/* CONTENIDO */}
+    <div style={{position:"relative",zIndex:1}}>
+      <div style={{background:"rgba(10,18,32,0.75)",borderBottom:"1px solid #0e1a2e",padding:"22px 28px 18px"}}>
         <div style={{maxWidth:900,margin:"0 auto",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:12}}>
           <div>
             <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:4}}>
@@ -480,7 +489,7 @@ export default function App() {
       </div>
 
       <div style={{maxWidth:900,margin:"0 auto",padding:"22px 20px 0"}}>
-        <div style={{display:"flex",gap:6,background:"#0a1020",border:"1px solid #0e1a2e",borderRadius:10,padding:5,marginBottom:22,width:"fit-content",flexWrap:"wrap"}}>
+        <div style={{display:"flex",gap:6,background:"rgba(10,16,32,0.8)",border:"1px solid #0e1a2e",borderRadius:10,padding:5,marginBottom:22,width:"fit-content",flexWrap:"wrap"}}>
           <button style={tabStyle("best")}   onClick={()=>setTab("best")}>🏆 Top 10 Mejores</button>
           <button style={tabStyle("worst")}  onClick={()=>setTab("worst")}>⚠️ Top 10 Peores</button>
           <button style={tabStyle("search")} onClick={()=>setTab("search")}>🔍 Buscar Vuelo</button>
@@ -488,7 +497,7 @@ export default function App() {
 
         {tab==="best"&&(
           <div>
-            <div style={{background:"#002a18",border:"1px solid #004030",borderRadius:10,padding:"11px 16px",marginBottom:16,display:"flex",alignItems:"center",gap:10}}>
+            <div style={{background:"rgba(0,42,24,0.85)",border:"1px solid #004030",borderRadius:10,padding:"11px 16px",marginBottom:16,display:"flex",alignItems:"center",gap:10}}>
               <span>🏆</span><span style={{color:"#40a070",fontSize:12}}>Los 10 vuelos con mejor nota promedio (mín. {MIN_COMMENTS} respuestas). Haz clic para ver detalle completo.</span>
             </div>
             <div style={{display:"flex",flexDirection:"column",gap:9}}>
@@ -498,7 +507,7 @@ export default function App() {
         )}
         {tab==="worst"&&(
           <div>
-            <div style={{background:"#2a0010",border:"1px solid #400020",borderRadius:10,padding:"11px 16px",marginBottom:16,display:"flex",alignItems:"center",gap:10}}>
+            <div style={{background:"rgba(42,0,16,0.85)",border:"1px solid #400020",borderRadius:10,padding:"11px 16px",marginBottom:16,display:"flex",alignItems:"center",gap:10}}>
               <span>⚠️</span><span style={{color:"#a04050",fontSize:12}}>Los 10 vuelos con peor nota promedio (mín. {MIN_COMMENTS} respuestas). Requieren atención prioritaria.</span>
             </div>
             <div style={{display:"flex",flexDirection:"column",gap:9}}>
@@ -511,5 +520,6 @@ export default function App() {
 
       {selectedFlight&&<FlightDetail flight={selectedFlight} onClose={()=>setSelectedFlight(null)}/>}
     </div>
-  );
+  </div>
+);
 }
